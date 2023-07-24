@@ -1,5 +1,6 @@
 import styles from "../styles/Home.module.scss";
 import Head from "next/head";
+import { Status } from "./components/status";
 
 export default function Home() {
   return (
@@ -9,8 +10,10 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <main>
-        <h1 className={styles.title}>Welcome to new next app!</h1>
+        {/* TODO: big orange circle background, all the sunsets from my photos? */}
+        <h1 className={styles.title}>spencers.place 🟠</h1>
       </main>
+      <Status />
     </>
   );
 }

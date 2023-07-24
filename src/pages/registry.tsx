@@ -13,20 +13,14 @@ interface IndexItem {
 export const getServerSideProps: GetServerSideProps<{
   data: IndexItem[];
 }> = async () => {
-  const CodaApiToken = "b1b81cae-2cdd-46e3-96c4-99f2b02484f4";
-  const docId = "_ObKm8enqO";
-  const gridId = "grid-XKBPGXQRwp";
+  const docId = "5hYjdHt-Rs";
+  const gridId =
+    "grid-sync-1054-Table-dynamic-91a21264ba5189ae869bfd39fc74c2deec9488c8ffe5267f43ef07b20fdef4e8";
   const resp = await fetch(
-    `https://coda.io/apis/v1/docs/${docId}/tables/${gridId}/rows?useColumnNames=true&valueFormat=simpleWithArrays&sortBy=natural`,
-    {
-      headers: {
-        Authorization: `Bearer ${CodaApiToken}`,
-      },
-    }
+    `https://opencoda.spencerc99.workers.dev/${docId}/${gridId}`
   );
-  const respBody = await resp.json();
-  const dataMetadata = respBody.items;
-  const data = dataMetadata.map((d) => d.values);
+  const data = await resp.json();
+  console.log(data);
   return { props: { data } };
 };
 
@@ -46,14 +40,18 @@ function RegistryItem({ item }: { item: IndexItem }) {
   const image = imageUrls ? imageUrls[0] : undefined;
   return (
     <div className="registryItem">
-      <a href={link}>
-        <h3>{title}</h3>
-      </a>
-      <p>{description}</p>
-      <span>
+      {/* <p>{description}</p> */}
+      {/* <span>
         {parentCategory}-{specificCategory}
-      </span>
-      {image && <img src={image} className="registryImage" />}
+      </span> */}
+      <figure>
+        <img src={image} className="registryImage" />
+        <figcaption>
+          <a href={link}>
+            <h3>{title}</h3>
+          </a>
+        </figcaption>
+      </figure>
     </div>
   );
 }
