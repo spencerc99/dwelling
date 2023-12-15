@@ -111,7 +111,9 @@ export default function ArtPortfolio({ data }: Props) {
           New York, and the DeYoung Museum in San Francisco.{" "}
           <a href="https://docs.google.com/document/d/1IX3UIaOtp8la1eDbmkBS0tXekS1VKkuvZpyfBkTVCyA/edit">
             Full Artist CV
-          </a>
+          </a>{" "}
+          or see more work at{" "}
+          <a href="https://spencerchang.me">spencerchang.me</a>
         </p>
         <br />
         <br />
