@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { jsxJoin } from "../../utils";
-import { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 
 /**
  * example object for v0
@@ -31,34 +31,28 @@ export interface Activity {
   birthdayEpoch: string;
 }
 
-async function fetchStream() {
-  const resp = await fetch("https://status.spencerchang.me/api/me");
-  const data = await resp.json();
-  return data;
-}
-
-export function Status() {
-  const [stream, setStream] = useState<Activity[]>([]);
-
-  useEffect(() => {
-    void fetchStream().then((data) => {
-      setStream(data);
-    });
-  });
-
+export function Status({ stream }: { stream: Activity[] }) {
   function renderContent() {
     return jsxJoin(
       stream.map((activity) => {
+        if (!activity.date) {
+          return;
+        }
+
         return (
           <>
+            {" "}
             [
             <span className="date">
               <span className="timestamp">
-                {new Dayjs(activity.date).format("MM.DD|HH:mm")}
+                {dayjs(activity.date).format("MM.DD|HH:mm")}
               </span>
               <span className="epoch">{activity.birthdayEpoch}</span>
             </span>
-            ]{activity.displayHTML}
+            ]{" "}
+            <span
+              dangerouslySetInnerHTML={{ __html: activity.displayHTML }}
+            ></span>
           </>
         );
       }),

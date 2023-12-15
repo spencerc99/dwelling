@@ -1,4 +1,6 @@
 import { GetServerSideProps } from "next";
+import classes from "../styles/registry.module.scss";
+import { useMemo, useState } from "react";
 
 interface IndexItem {
   id: string;
@@ -20,7 +22,6 @@ export const getServerSideProps: GetServerSideProps<{
     `https://opencoda.spencerc99.workers.dev/${docId}/${gridId}`
   );
   const data = await resp.json();
-  console.log(data);
   return { props: { data } };
 };
 
@@ -39,13 +40,13 @@ function RegistryItem({ item }: { item: IndexItem }) {
   } = item;
   const image = imageUrls ? imageUrls[0] : undefined;
   return (
-    <div className="registryItem">
+    <div className={classes.registryItem}>
       {/* <p>{description}</p> */}
       {/* <span>
         {parentCategory}-{specificCategory}
       </span> */}
       <figure>
-        <img src={image} className="registryImage" />
+        <img src={image} className={classes.registryImage} loading="lazy" />
         <figcaption>
           <a href={link}>
             <h3>{title}</h3>
@@ -57,11 +58,47 @@ function RegistryItem({ item }: { item: IndexItem }) {
 }
 
 export default function Registry({ data }: Props) {
+  const query = useMemo(() => new URLSearchParams(window.location.search), []);
+
+  const allCategories = useMemo(
+    () => new Set(data.map((d) => d.parentCategory).filter((d) => d)),
+    [data]
+  );
+
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const filteredData = useMemo(
+    () =>
+      data.filter((d) => {
+        if (selectedCategory === "all") {
+          return true;
+        }
+        return d.parentCategory === selectedCategory;
+      }),
+    [data, selectedCategory]
+  );
+
   return (
-    <div className="registry">
-      {data.map((d) => (
-        <RegistryItem key={d.id} item={d} />
-      ))}
-    </div>
+    <main>
+      <div className={classes.filters}>
+        <select
+          onChange={(e) => {
+            setSelectedCategory(e.target.value);
+          }}
+          value={selectedCategory}
+        >
+          <option value="all">All</option>
+          {Array.from(allCategories).map((c) => (
+            <option key={c} value={c}>
+              {c}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className={classes.registry}>
+        {filteredData.map((d) => (
+          <RegistryItem key={d.id} item={d} />
+        ))}
+      </div>
+    </main>
   );
 }
