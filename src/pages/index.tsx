@@ -1,17 +1,19 @@
 import styles from "../styles/Home.module.scss";
 import Head from "next/head";
-import { Activity, Status } from "./components/status";
-import { GetServerSideProps } from "next";
+import { Activity, Status } from "../components/status";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
-export const getServerSideProps: GetServerSideProps<{
-  stream: Activity[];
-}> = async () => {
+export const getServerSideProps = (async () => {
   const resp = await fetch("https://status.spencerchang.me/api/me");
   const data = await resp.json();
   return { props: { stream: data } };
-};
+}) satisfies GetServerSideProps<{
+  stream: Activity[];
+}>;
 
-export default function Home({ stream }: { stream: Activity[] }) {
+export default function Home({
+  stream,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
       <Head>

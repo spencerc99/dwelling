@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { jsxJoin } from "../../utils";
+import { jsxJoin } from "../utils";
 import dayjs from "dayjs";
 
 /**
@@ -72,3 +72,5 @@ export function Status({ stream }: { stream: Activity[] }) {
     </div>
   );
 }
+
+export default Status;

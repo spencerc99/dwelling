@@ -6,6 +6,7 @@ export function jsxJoin(
     if (i === 0) {
       return [el];
     }
+    // @ts-ignore
     return [...acc, separator, el];
   }, [] as React.ReactNode[]);
 }
