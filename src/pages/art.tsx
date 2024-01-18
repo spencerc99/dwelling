@@ -9,6 +9,7 @@ interface IndexItem {
   title: string;
   link: string;
   description: string;
+  Materials: string;
   imageUrls: string[];
   specificCategory: string[];
   parentCategory: string;
@@ -47,6 +48,7 @@ function RegistryItem({ item }: { item: IndexItem }) {
     description,
     imageUrls,
     date,
+    Materials,
     specificCategory,
     parentCategory,
   } = item;
@@ -57,14 +59,17 @@ function RegistryItem({ item }: { item: IndexItem }) {
       {/* <span>
         {parentCategory}-{specificCategory}
       </span> */}
-      <img
-        src={image}
-        className={classes.registryImage}
-        loading="lazy"
-        data-zoomable
-        alt={`still of ${title}`}
-        title={`still image of ${title}`}
-      />
+      <div className={classes.registryImgContainer}>
+        <img
+          src={image}
+          className={classes.registryImage}
+          loading="lazy"
+          data-zoomable
+          alt={`still of ${title}`}
+          title={`still image of ${title}`}
+        />
+        <i>{Materials}</i>
+      </div>
       <div>
         <div className={classes.registryItemHeader}>
           <a href={link}>
