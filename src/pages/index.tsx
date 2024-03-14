@@ -19,6 +19,12 @@ export default function Home({
       <Head>
         <title>spencers website</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script
+          defer
+          data-domain="spencer.place"
+          data-api="https://sharingan.spencerc99.workers.dev/genjutsu/event"
+          src="https://sharingan.spencerc99.workers.dev/genjutsu/script.js"
+        ></script>
       </Head>
       <main>
         {/* TODO: big orange circle background, all the sunsets from my photos? */}
