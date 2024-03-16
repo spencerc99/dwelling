@@ -58,8 +58,6 @@ function RegistryItem({ item }: { item: IndexItem }) {
 }
 
 export default function Registry({ data }: Props) {
-  const query = useMemo(() => new URLSearchParams(window.location.search), []);
-
   const allCategories = useMemo(
     () => new Set(data.map((d) => d.parentCategory).filter((d) => d)),
     [data]
